@@ -42,7 +42,7 @@ def work_class_sop(class_name):
 
 browser = webdriver.Firefox()
 browser.accept_untrusted_certs = True
-browser.get('target_url')
+browser.get(target_url)
 time.sleep(5)
 action = ActionChains(browser)
 
@@ -87,6 +87,8 @@ cal_rows = g_calendar.get_cal_week_info_by_day(cal_events)
 for i in range(7): 
     weeks = browser.find_elements_by_xpath('/html/body/div[1]/div/div[2]/div[2]/div/div/ul/li')
     note_day = weeks[i].find_element_by_xpath('./div/div').text
+    if len(note_day) < 2:
+        note_day = "0" + note_day
     #### debug special day
     if debug:
         if note_day == '30':
@@ -136,4 +138,8 @@ for i in range(7):
         browser.find_element_by_xpath('//*[@id="td12_0"]').send_keys(note_input_list[3])
         browser.find_element_by_xpath('//*[@id="dailySaveA"]').click()
         #### 作業時間填入
+
+#### 在作業完成後將結果存成PNG檔作佐證資料
+
+browser.save_screenshot(g_calendar.get_current_date() + ".png")
 

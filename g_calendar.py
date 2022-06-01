@@ -87,3 +87,6 @@ def get_one_row_data(rows, day):
         return input_string_list
     else:
         return None
+
+def get_current_date():
+    return datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
